@@ -219,7 +219,7 @@ SELECT_LANGUAGE, CHOOSE_OFFSET, ENTER_CODE = range(3)
 
 MESSAGES = {
     'ru': {
-        'welcome': '🔥 ИЩЕШЬ ТИМЕЙТОВ ИЛИ ХОЧЕШЬ УДИВИТЬ РАНДОМОВ? 🔥\n\nВстречайте <b>Team Codes | BS</b> — твой лучший помощник для поиска рандомных команд! Ты можешь зайти в руму даже к тем, кто никого не ищет. Больше никаких проблем с поиском кодов.\n\n🎮 <b>Что умеет бот:</b>\n✅ Генерирует 10 уникальных кодов за один клик\n✅ Создает прямые ссылки-приглашения (просто нажми и играй)\n✅ Умная система Offset: меняй сдвиг (5, 50, 100), чтобы находить свободные румы!\n\n🚀 <b>Как это работает?</b>\n1. Отправь боту свой код команды или ссылку\n2. Получи список из 10 новых рабочих кодов и ссылок\n\n🛡 Безопасно и приватно. Сделано игроками для игроков.',
+        'welcome': '🔥 ИЩЕШЬ ТИМЕЙТОВ ИЛИ ХОЧЕШЬ УДИВИТЬ РАНДОМОВ? 🔥\n\nВстречайте Team Codes | BS — твой лучший помощник для поиска рандомных команд! Ты можешь зайти в руму даже к тем, кто никого не ищет. Больше никаких проблем с поиском кодов.\n\n🎮 <b>Что умеет бот:</b>\n✅ Генерирует 10 уникальных кодов за один клик\n✅ Создает прямые ссылки-приглашения\n✅ Умная система Offset: меняй сдвиг (5, 50, 100), чтобы находить свободные румы!\n\n🚀 <b>Как это работает?</b>\nОтправь боту свой код команды или ссылку.\nПолучи список из 10 новых рабочих кодов и ссылок.\n\n🛡 Безопасно и приватно. Сделано игроками для игроков.\n\n👉 ЗАПУСТИТЬ БОТА: @Team_codes_bs_bot\n📣 Поддержка и новости: @w1ther1ngs',
         'generate_prompt': '📝 Введите код команды Brawl Stars',
         'invalid_code': '⚠️ Неверный формат кода команды!',
         'generated_header': '🎮 <b>Сгенерированные коды</b> (смещение: +',
@@ -227,9 +227,10 @@ MESSAGES = {
         'help': '<b>📖 Справка по боту</b>\n\n<b>🎯 Что делает бот?</b>\nГенерирует уникальные коды команд Brawl Stars с возможностью копирования и отправки приглашений.\n\n<b>📝 Как использовать:</b>\n1. Отправьте код команды (например: <code>XWADUQNY</code>)\n2. Или отправьте ссылку на команду\n3. Получите 10 новых кодов с приватными ссылками\n\n<b>⚙️ Команды:</b>\n/offset - выбрать смещение для генерации\n/generate - начать генерацию\n/help - эта справка\n\n<b>✅ Поддерживает:</b>\n✓ Прямые коды (XWADUQNY)\n✓ Ссылки-приглашения\n✓ Произвольные смещения',
         'select_language': '🌐 Выберите язык / Choose language:',
         'offset_prompt': '🔢 Выберите смещение или введите свое значение:',
+        'start_ready': '✅ Отлично! Язык установлен на Русский.\n\nТеперь вы готовы использовать бота!\n\n📝 Просто отправьте код команды Brawl Stars или нажмите /generate',
     },
     'en': {
-        'welcome': '🔥 LOOKING FOR TEAMMATES OR WANT TO SURPRISE RANDOMS? 🔥\n\nMeet <b>Team Codes | BS</b> — your ultimate tool for finding random teams! You can join lobbies even with players who aren\'t looking for anyone. No more struggles finding codes.\n\n🎮 <b>Bot Features:</b>\n✅ Generates 10 unique codes in one click\n✅ Creates direct invite links (just click & play)\n✅ Smart Offset System: change the shift (5, 50, 100) to find active rooms!\n\n🚀 <b>How does it work?</b>\n1. Send your team code or link to the bot\n2. Get a list of 10 fresh working codes and links\n\n🛡 Safe & Private. Made by players, for players.',
+        'welcome': '🔥 LOOKING FOR TEAMMATES OR WANT TO SURPRISE RANDOMS? 🔥\n\nMeet Team Codes | BS — your ultimate tool for finding random teams! You can join lobbies even with players who aren\'t looking for anyone. No more struggles finding codes.\n\n🎮 <b>Bot Features:</b>\n✅ Generates 10 unique codes in one click\n✅ Creates direct invite links (just click & play)\n✅ Smart Offset System: change the shift (5, 50, 100) to find active rooms!\n\n🚀 <b>How does it work?</b>\nSend your team code or link to the bot.\nGet a list of 10 fresh working codes and links.\n\n🛡 Safe & Private. Made by players, for players.\n\n👉 START BOT: @Team_codes_bs_bot\n📣 Support & News: @w1ther1ngs',
         'generate_prompt': '📝 Enter your Brawl Stars team code',
         'invalid_code': '⚠️ Invalid team code format!',
         'generated_header': '🎮 <b>Generated Codes</b> (offset: +',
@@ -237,6 +238,7 @@ MESSAGES = {
         'help': '<b>📖 Bot Help</b>\n\n<b>🎯 What does this bot do?</b>\nGenerates unique Brawl Stars team codes with copy and invite link functionality.\n\n<b>📝 How to use:</b>\n1. Send a team code (example: <code>XWADUQNY</code>)\n2. Or send a team invite link\n3. Get 10 new codes with private invite links\n\n<b>⚙️ Commands:</b>\n/offset - choose offset for generation\n/generate - start generation\n/help - this help\n\n<b>✅ Supports:</b>\n✓ Direct codes (XWADUQNY)\n✓ Invite links\n✓ Custom offsets',
         'select_language': '🌐 Select language / Выберите язык:',
         'offset_prompt': '🔢 Select offset or enter custom value:',
+        'start_ready': '✅ Perfect! Language set to English.\n\nYou\'re all set to use the bot!\n\n📝 Just send a Brawl Stars team code or click /generate',
     }
 }
 
@@ -372,6 +374,11 @@ async def language_choice(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     
     await query.edit_message_caption(
         caption=MESSAGES[lang]['welcome'],
+        parse_mode="HTML"
+    )
+    
+    await query.message.reply_text(
+        MESSAGES[lang]['start_ready'],
         parse_mode="HTML"
     )
     
