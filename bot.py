@@ -12,7 +12,6 @@ import re
 import psycopg2
 import threading
 from datetime import datetime
-from flask import Flask, request
 
 TEAM_CONVERSION_CHARS = "QWERTYUPASDFGHJKLZCVBNM23456789"
 TEAM_TAG = "X"
