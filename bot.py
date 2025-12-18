@@ -543,26 +543,6 @@ async def generate_codes(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 async def direct_code_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await generate_codes(update, context)
 
-app = Flask(__name__)
-
-@app.route('/')
-def health_check():
-    return 'OK', 200
-
-@app.route('/health')
-def health():
-    return 'OK', 200
-
-def run_flask(application):
-    port = int(os.environ.get('PORT', 8080))
-    
-    @app.post("/webhook")
-    async def webhook():
-        update = Update.de_json(request.json, application.bot)
-        await application.process_update(update)
-        return "OK"
-    
-    app.run(host='0.0.0.0', port=port, threaded=True)
 
 def main() -> None:
     token = os.environ.get("TELEGRAM_BOT_TOKEN")
@@ -622,24 +602,17 @@ def main() -> None:
         direct_code_handler
     ))
     
-    is_railway = os.environ.get("DATABASE_URL") is not None
+    print("🚀 Бот запущен в режиме Polling!")
+    print(f"Канал для подписки: {CHANNEL_USERNAME}")
     
-    if is_railway:
-        print("🚀 Бот запущен на Railway в режиме Webhook!")
-        print(f"Канал для подписки: {CHANNEL_USERNAME}")
-        run_flask(application)
-    else:
-        print("🚀 Бот запущен локально в режиме Polling!")
-        print(f"Канал для подписки: {CHANNEL_USERNAME}")
-        
-        try:
-            application.run_polling(allowed_updates=Update.ALL_TYPES)
-        except Exception as e:
-            if "Conflict" in str(e) or "getUpdates" in str(e):
-                logger.error("Обнаружен конфликт с другим инстансом бота")
-                logger.error("На Railway используйте только одного worker")
-                sys.exit(0)
-            raise
+    try:
+        application.run_polling(allowed_updates=Update.ALL_TYPES)
+    except Exception as e:
+        if "Conflict" in str(e) or "getUpdates" in str(e):
+            logger.error("Обнаружен конфликт с другим инстансом бота")
+            logger.error("Убедитесь что запущен только один инстанс")
+            sys.exit(0)
+        raise
 
 if __name__ == "__main__":
     main()

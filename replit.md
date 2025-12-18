@@ -2,22 +2,20 @@
 
 ## Overview
 
-Telegram бот для генерации последовательных кодов команд Brawl Stars. Развёрнут ТОЛЬКО на Railway.
+Telegram бот для генерации последовательных кодов команд Brawl Stars. Развёрнут ТОЛЬКО на Railway в режиме Polling.
 
 **Обязательная подписка:** @realarenax
 
-## Deployment (Railway ТОЛЬКО)
+## Deployment (Railway)
 
-### Переменные окружения установлены:
+### Переменные окружения (должны быть установлены):
 - ✅ TELEGRAM_BOT_TOKEN
 - ✅ DATABASE_URL (PostgreSQL)
 
-### Webhook URL:
-```
-https://YOUR_RAILWAY_DOMAIN/webhook
-```
-
-Установи в @BotFather → /setwebhook
+### Режим работы:
+- **Polling** (долгие опросы к Telegram API)
+- Не требует webhook настроек
+- Просто запусти бот и работает!
 
 ## Bot Features
 
@@ -64,6 +62,14 @@ PostgreSQL таблица: `message_logs`
 - message_text, code_input
 - created_at
 
-## Mode: Webhook on Railway
+## Как запустить на Railway
 
-Бот работает в режиме Webhook. На Railway запущен Flask сервер на порту 8080.
+1. Убедись что на Railway установлены переменные:
+   - TELEGRAM_BOT_TOKEN
+   - DATABASE_URL
+
+2. Railway автоматически запустит бот через Procfile
+
+3. Бот сразу начнёт работать в режиме Polling ✅
+
+Никаких дополнительных настроек не требуется!
