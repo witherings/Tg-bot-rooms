@@ -1,0 +1,167 @@
+2025-12-18T18:21:25.166930006Z [err]   * Running on http://127.0.0.1:8080
+2025-12-18T18:21:25.166944412Z [err]   * Running on http://10.204.49.31:8080
+2025-12-18T18:21:25.166953306Z [err]  2025-12-18 18:21:24,600 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-12-18T18:21:25.166976396Z [err]  2025-12-18 18:21:24,591 - __main__ - INFO - База данных инициализирована успешно
+2025-12-18T18:21:25.166981845Z [err]  2025-12-18 18:21:24,591 - __main__ - INFO - Health check сервер запущен
+2025-12-18T18:21:25.167005768Z [err]  2025-12-18 18:21:24,600 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+2025-12-18T18:21:25.167011187Z [err]   * Running on all addresses (0.0.0.0)
+2025-12-18T18:21:25.170224429Z [err]  /app/bot.py:568: PTBUserWarning: If 'per_message=False', 'CallbackQueryHandler' will not be tracked for every message. Read this FAQ entry to learn more about the per_* settings: https://github.com/python-telegram-bot/python-telegram-bot/wiki/Frequently-Asked-Questions#what-do-the-per_-settings-in-conversationhandler-do.
+2025-12-18T18:21:25.170241876Z [err]    offset_conv_handler = ConversationHandler(
+2025-12-18T18:21:25.170262840Z [err]  2025-12-18 18:21:25,135 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7627088068:AAEB75ZFZKriOUdG87Ir0iZcb5uadowQBe0/getMe "HTTP/1.1 200 OK"
+2025-12-18T18:21:25.291732915Z [err]  2025-12-18 18:21:25,286 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7627088068:AAEB75ZFZKriOUdG87Ir0iZcb5uadowQBe0/deleteWebhook "HTTP/1.1 200 OK"
+2025-12-18T18:21:25.294036602Z [err]  2025-12-18 18:21:25,289 - telegram.ext.Application - INFO - Application started
+2025-12-18T18:21:30.142557965Z [err]  2025-12-18 18:21:29,989 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7627088068:AAEB75ZFZKriOUdG87Ir0iZcb5uadowQBe0/getUpdates "HTTP/1.1 409 Conflict"
+2025-12-18T18:21:30.142564410Z [err]  2025-12-18 18:21:29,990 - telegram.ext.Application - ERROR - No error handlers are registered, logging exception.
+2025-12-18T18:21:30.142570990Z [err]  Traceback (most recent call last):
+2025-12-18T18:21:30.142578181Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_utils/networkloop.py", line 134, in network_retry_loop
+2025-12-18T18:21:30.142588495Z [err]      await do_action()
+2025-12-18T18:21:30.142593818Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_utils/networkloop.py", line 127, in do_action
+2025-12-18T18:21:30.142597828Z [err]      action_cb_task.result()
+2025-12-18T18:21:30.142602953Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_updater.py", line 340, in polling_action_cb
+2025-12-18T18:21:30.142607386Z [err]      updates = await self.bot.get_updates(
+2025-12-18T18:21:30.142612082Z [err]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:30.142617341Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_extbot.py", line 676, in get_updates
+2025-12-18T18:21:30.142622907Z [err]      updates = await super().get_updates(
+2025-12-18T18:21:30.142627757Z [err]                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:30.142632162Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/_bot.py", line 4780, in get_updates
+2025-12-18T18:21:30.142637096Z [err]      await self._post(
+2025-12-18T18:21:30.142642101Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/_bot.py", line 703, in _post
+2025-12-18T18:21:30.142646605Z [err]      return await self._do_post(
+2025-12-18T18:21:30.142651619Z [err]             ^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:30.142656528Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_extbot.py", line 372, in _do_post
+2025-12-18T18:21:30.152767189Z [err]      return await super()._do_post(
+2025-12-18T18:21:30.152772338Z [err]             ^^^^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:30.152779895Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/_bot.py", line 732, in _do_post
+2025-12-18T18:21:30.152785592Z [err]      result = await request.post(
+2025-12-18T18:21:30.152794648Z [err]               ^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:30.152800597Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/request/_baserequest.py", line 198, in post
+2025-12-18T18:21:30.152806406Z [err]      result = await self._request_wrapper(
+2025-12-18T18:21:30.152812278Z [err]               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:30.152817600Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/request/_baserequest.py", line 375, in _request_wrapper
+2025-12-18T18:21:30.152826226Z [err]      raise exception
+2025-12-18T18:21:30.152831745Z [err]  telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-12-18T18:21:36.099697459Z [err]      updates = await self.bot.get_updates(
+2025-12-18T18:21:36.099709716Z [err]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:36.099719495Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_extbot.py", line 676, in get_updates
+2025-12-18T18:21:36.099727974Z [err]      updates = await super().get_updates(
+2025-12-18T18:21:36.099734660Z [err]  2025-12-18 18:21:35,752 - telegram.ext.Application - ERROR - No error handlers are registered, logging exception.
+2025-12-18T18:21:36.099745510Z [err]  Traceback (most recent call last):
+2025-12-18T18:21:36.099754899Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_utils/networkloop.py", line 134, in network_retry_loop
+2025-12-18T18:21:36.099760834Z [err]             ^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:36.099777143Z [err]      await do_action()
+2025-12-18T18:21:36.099781046Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_extbot.py", line 372, in _do_post
+2025-12-18T18:21:36.099785756Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_utils/networkloop.py", line 127, in do_action
+2025-12-18T18:21:36.099796926Z [err]  2025-12-18 18:21:35,751 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7627088068:AAEB75ZFZKriOUdG87Ir0iZcb5uadowQBe0/getUpdates "HTTP/1.1 409 Conflict"
+2025-12-18T18:21:36.099797213Z [err]      action_cb_task.result()
+2025-12-18T18:21:36.099802012Z [err]                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:36.099812375Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_updater.py", line 340, in polling_action_cb
+2025-12-18T18:21:36.099812489Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/_bot.py", line 4780, in get_updates
+2025-12-18T18:21:36.099818618Z [err]      await self._post(
+2025-12-18T18:21:36.099826014Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/_bot.py", line 703, in _post
+2025-12-18T18:21:36.099833933Z [err]      return await self._do_post(
+2025-12-18T18:21:36.105952268Z [err]      return await super()._do_post(
+2025-12-18T18:21:36.105957973Z [err]             ^^^^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:36.105963742Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/_bot.py", line 732, in _do_post
+2025-12-18T18:21:36.105971083Z [err]      result = await request.post(
+2025-12-18T18:21:36.105980149Z [err]               ^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:36.105986805Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/request/_baserequest.py", line 198, in post
+2025-12-18T18:21:36.105992533Z [err]      result = await self._request_wrapper(
+2025-12-18T18:21:36.105998704Z [err]               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:36.106004610Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/request/_baserequest.py", line 375, in _request_wrapper
+2025-12-18T18:21:36.106010287Z [err]      raise exception
+2025-12-18T18:21:36.106016407Z [err]  telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-12-18T18:21:43.194602638Z [err]             ^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:43.194613610Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_extbot.py", line 372, in _do_post
+2025-12-18T18:21:43.194714220Z [err]  2025-12-18 18:21:42,772 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7627088068:AAEB75ZFZKriOUdG87Ir0iZcb5uadowQBe0/getUpdates "HTTP/1.1 409 Conflict"
+2025-12-18T18:21:43.194721791Z [err]  2025-12-18 18:21:42,773 - telegram.ext.Application - ERROR - No error handlers are registered, logging exception.
+2025-12-18T18:21:43.194728572Z [err]  Traceback (most recent call last):
+2025-12-18T18:21:43.194735795Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_utils/networkloop.py", line 134, in network_retry_loop
+2025-12-18T18:21:43.194743620Z [err]      await do_action()
+2025-12-18T18:21:43.194752025Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_utils/networkloop.py", line 127, in do_action
+2025-12-18T18:21:43.194760555Z [err]      action_cb_task.result()
+2025-12-18T18:21:43.194768007Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_updater.py", line 340, in polling_action_cb
+2025-12-18T18:21:43.194774448Z [err]      updates = await self.bot.get_updates(
+2025-12-18T18:21:43.194781580Z [err]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:43.194833536Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_extbot.py", line 676, in get_updates
+2025-12-18T18:21:43.194846915Z [err]      updates = await super().get_updates(
+2025-12-18T18:21:43.194854336Z [err]                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:43.194861580Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/_bot.py", line 4780, in get_updates
+2025-12-18T18:21:43.194868552Z [err]      await self._post(
+2025-12-18T18:21:43.194875351Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/_bot.py", line 703, in _post
+2025-12-18T18:21:43.194883509Z [err]      return await self._do_post(
+2025-12-18T18:21:43.196546519Z [err]      return await super()._do_post(
+2025-12-18T18:21:43.196552797Z [err]             ^^^^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:43.196569942Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/_bot.py", line 732, in _do_post
+2025-12-18T18:21:43.196576125Z [err]      result = await request.post(
+2025-12-18T18:21:43.196581781Z [err]               ^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:43.196589265Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/request/_baserequest.py", line 198, in post
+2025-12-18T18:21:43.196595348Z [err]      result = await self._request_wrapper(
+2025-12-18T18:21:43.196602039Z [err]               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:43.196608610Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/request/_baserequest.py", line 375, in _request_wrapper
+2025-12-18T18:21:43.196614459Z [err]      raise exception
+2025-12-18T18:21:43.196619978Z [err]  telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-12-18T18:21:45.299756794Z [err]  2025-12-18 18:21:45,297 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7627088068:AAEB75ZFZKriOUdG87Ir0iZcb5uadowQBe0/getUpdates "HTTP/1.1 200 OK"
+2025-12-18T18:21:46.213603594Z [err]  2025-12-18 18:21:45,804 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7627088068:AAEB75ZFZKriOUdG87Ir0iZcb5uadowQBe0/getChatMember "HTTP/1.1 200 OK"
+2025-12-18T18:21:46.213610691Z [err]  2025-12-18 18:21:45,805 - __main__ - INFO - Статус пользователя 5119226441 в канале @neighty_bs: creator
+2025-12-18T18:21:46.213617398Z [err]  2025-12-18 18:21:45,851 - __main__ - INFO - Сообщение от пользователя 5119226441 успешно записано в лог
+2025-12-18T18:21:46.213624866Z [err]  2025-12-18 18:21:46,061 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7627088068:AAEB75ZFZKriOUdG87Ir0iZcb5uadowQBe0/sendMessage "HTTP/1.1 200 OK"
+2025-12-18T18:21:48.667280852Z [err]  2025-12-18 18:21:48,665 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7627088068:AAEB75ZFZKriOUdG87Ir0iZcb5uadowQBe0/getUpdates "HTTP/1.1 409 Conflict"
+2025-12-18T18:21:48.670475033Z [err]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:48.670507264Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_extbot.py", line 676, in get_updates
+2025-12-18T18:21:48.670513179Z [err]      updates = await super().get_updates(
+2025-12-18T18:21:48.670519970Z [err]                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:48.670525023Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/_bot.py", line 4780, in get_updates
+2025-12-18T18:21:48.670532454Z [err]      await self._post(
+2025-12-18T18:21:48.670538490Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/_bot.py", line 703, in _post
+2025-12-18T18:21:48.670543315Z [err]      return await self._do_post(
+2025-12-18T18:21:48.670548051Z [err]             ^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:48.670563240Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_extbot.py", line 372, in _do_post
+2025-12-18T18:21:48.670568965Z [err]      return await super()._do_post(
+2025-12-18T18:21:48.670575082Z [err]             ^^^^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:48.670657141Z [err]  2025-12-18 18:21:48,666 - telegram.ext.Application - ERROR - No error handlers are registered, logging exception.
+2025-12-18T18:21:48.670663536Z [err]  Traceback (most recent call last):
+2025-12-18T18:21:48.670670458Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_utils/networkloop.py", line 134, in network_retry_loop
+2025-12-18T18:21:48.670676741Z [err]      await do_action()
+2025-12-18T18:21:48.670685029Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_utils/networkloop.py", line 127, in do_action
+2025-12-18T18:21:48.670691783Z [err]      action_cb_task.result()
+2025-12-18T18:21:48.670699532Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_updater.py", line 340, in polling_action_cb
+2025-12-18T18:21:48.670706517Z [err]      updates = await self.bot.get_updates(
+2025-12-18T18:21:48.671323247Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/_bot.py", line 732, in _do_post
+2025-12-18T18:21:48.671327019Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/request/_baserequest.py", line 198, in post
+2025-12-18T18:21:48.671328235Z [err]      result = await request.post(
+2025-12-18T18:21:48.671333593Z [err]               ^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:48.671336492Z [err]      result = await self._request_wrapper(
+2025-12-18T18:21:48.671342501Z [err]               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:48.671347167Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/request/_baserequest.py", line 375, in _request_wrapper
+2025-12-18T18:21:48.671352656Z [err]      raise exception
+2025-12-18T18:21:48.671357665Z [err]  telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-12-18T18:21:58.204837149Z [err]  2025-12-18 18:21:58,201 - httpx - INFO - HTTP Request: POST https://api.telegram.org/bot7627088068:AAEB75ZFZKriOUdG87Ir0iZcb5uadowQBe0/getUpdates "HTTP/1.1 409 Conflict"
+2025-12-18T18:21:58.207724536Z [err]  2025-12-18 18:21:58,202 - telegram.ext.Application - ERROR - No error handlers are registered, logging exception.
+2025-12-18T18:21:58.207735555Z [err]  Traceback (most recent call last):
+2025-12-18T18:21:58.207742285Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_utils/networkloop.py", line 134, in network_retry_loop
+2025-12-18T18:21:58.207748279Z [err]      await do_action()
+2025-12-18T18:21:58.207753924Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_utils/networkloop.py", line 127, in do_action
+2025-12-18T18:21:58.207759531Z [err]      action_cb_task.result()
+2025-12-18T18:21:58.207765537Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_updater.py", line 340, in polling_action_cb
+2025-12-18T18:21:58.207771927Z [err]      updates = await self.bot.get_updates(
+2025-12-18T18:21:58.207778294Z [err]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:58.207785202Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_extbot.py", line 676, in get_updates
+2025-12-18T18:21:58.207794204Z [err]      updates = await super().get_updates(
+2025-12-18T18:21:58.207802478Z [err]                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:58.207808988Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/_bot.py", line 4780, in get_updates
+2025-12-18T18:21:58.207815454Z [err]      await self._post(
+2025-12-18T18:21:58.207822385Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/_bot.py", line 703, in _post
+2025-12-18T18:21:58.207834725Z [err]      return await self._do_post(
+2025-12-18T18:21:58.207841177Z [err]             ^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:58.207848758Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/ext/_extbot.py", line 372, in _do_post
+2025-12-18T18:21:58.207854987Z [err]      return await super()._do_post(
+2025-12-18T18:21:58.207860920Z [err]             ^^^^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:58.209435334Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/request/_baserequest.py", line 375, in _request_wrapper
+2025-12-18T18:21:58.209444687Z [err]      raise exception
+2025-12-18T18:21:58.209451279Z [err]  telegram.error.Conflict: Conflict: terminated by other getUpdates request; make sure that only one bot instance is running
+2025-12-18T18:21:58.209464297Z [err]               ^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:58.209471412Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/request/_baserequest.py", line 198, in post
+2025-12-18T18:21:58.209477956Z [err]      result = await self._request_wrapper(
+2025-12-18T18:21:58.209484179Z [err]               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2025-12-18T18:21:58.209537022Z [err]    File "/opt/venv/lib/python3.11/site-packages/telegram/_bot.py", line 732, in _do_post
+2025-12-18T18:21:58.209545263Z [err]      result = await request.post(

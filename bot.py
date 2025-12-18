@@ -12,7 +12,7 @@ import re
 import psycopg2
 import threading
 from datetime import datetime
-from flask import Flask
+from flask import Flask, request
 
 TEAM_CONVERSION_CHARS = "QWERTYUPASDFGHJKLZCVBNM23456789"
 TEAM_TAG = "X"
@@ -542,8 +542,15 @@ def health_check():
 def health():
     return 'OK', 200
 
-def run_flask():
+def run_flask(application):
     port = int(os.environ.get('PORT', 8080))
+    
+    @app.post("/webhook")
+    async def webhook():
+        update = Update.de_json(request.json, application.bot)
+        await application.process_update(update)
+        return "OK"
+    
     app.run(host='0.0.0.0', port=port, threaded=True)
 
 def main() -> None:
@@ -558,10 +565,6 @@ def main() -> None:
         sys.exit(1)
     
     init_db()
-    
-    flask_thread = threading.Thread(target=run_flask, daemon=True)
-    flask_thread.start()
-    logger.info("Health check сервер запущен")
     
     application = Application.builder().token(token).build()
     
@@ -599,9 +602,23 @@ def main() -> None:
         direct_code_handler
     ))
     
-    print("🚀 Бот запущен!")
+    # Запускаем Flask в отдельном потоке для webhook
+    flask_thread = threading.Thread(target=lambda: run_flask(application), daemon=False)
+    flask_thread.start()
+    logger.info("Flask сервер для webhook запущен")
+    
+    print("🚀 Бот запущен в режиме Polling!")
     print(f"Канал для подписки: {CHANNEL_USERNAME}")
-    application.run_polling(allowed_updates=Update.ALL_TYPES)
+    print("\nДля Railway деплоя используется режим Webhook (автоматически в Procfile)")
+    
+    try:
+        application.run_polling(allowed_updates=Update.ALL_TYPES)
+    except Exception as e:
+        if "Conflict" in str(e) or "getUpdates" in str(e):
+            logger.error("Обнаружен конфликт с другим инстансом бота")
+            logger.error("На Railway используйте только одного worker")
+            sys.exit(0)
+        raise
 
 if __name__ == "__main__":
     main()
