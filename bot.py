@@ -356,9 +356,8 @@ async def select_language(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
-    await update.message.reply_photo(
-        photo=open('/home/runner/workspace/welcome.png', 'rb'),
-        caption=MESSAGES['ru']['select_language'],
+    await update.message.reply_text(
+        MESSAGES['ru']['select_language'],
         reply_markup=reply_markup,
         parse_mode="HTML"
     )
@@ -372,8 +371,8 @@ async def language_choice(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     lang = 'ru' if query.data == 'lang_ru' else 'en'
     context.user_data['language'] = lang
     
-    await query.edit_message_caption(
-        caption=MESSAGES[lang]['welcome'],
+    await query.edit_message_text(
+        text=MESSAGES[lang]['welcome'],
         parse_mode="HTML"
     )
     
@@ -649,23 +648,24 @@ def main() -> None:
         direct_code_handler
     ))
     
-    # Запускаем Flask в отдельном потоке для webhook
-    flask_thread = threading.Thread(target=lambda: run_flask(application), daemon=False)
-    flask_thread.start()
-    logger.info("Flask сервер для webhook запущен")
+    is_railway = os.environ.get("DATABASE_URL") is not None
     
-    print("🚀 Бот запущен в режиме Polling!")
-    print(f"Канал для подписки: {CHANNEL_USERNAME}")
-    print("\nДля Railway деплоя используется режим Webhook (автоматически в Procfile)")
-    
-    try:
-        application.run_polling(allowed_updates=Update.ALL_TYPES)
-    except Exception as e:
-        if "Conflict" in str(e) or "getUpdates" in str(e):
-            logger.error("Обнаружен конфликт с другим инстансом бота")
-            logger.error("На Railway используйте только одного worker")
-            sys.exit(0)
-        raise
+    if is_railway:
+        print("🚀 Бот запущен на Railway в режиме Webhook!")
+        print(f"Канал для подписки: {CHANNEL_USERNAME}")
+        run_flask(application)
+    else:
+        print("🚀 Бот запущен локально в режиме Polling!")
+        print(f"Канал для подписки: {CHANNEL_USERNAME}")
+        
+        try:
+            application.run_polling(allowed_updates=Update.ALL_TYPES)
+        except Exception as e:
+            if "Conflict" in str(e) or "getUpdates" in str(e):
+                logger.error("Обнаружен конфликт с другим инстансом бота")
+                logger.error("На Railway используйте только одного worker")
+                sys.exit(0)
+            raise
 
 if __name__ == "__main__":
     main()
