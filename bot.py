@@ -243,10 +243,6 @@ MESSAGES = {
 }
 
 async def check_subscription(update: Update, context: ContextTypes.DEFAULT_TYPE) -> bool:
-    if context.user_data.get('temp_access', False):
-        logger.info(f"Пользователь {update.effective_user.id} имеет временный доступ")
-        return True
-        
     user_id = update.effective_user.id
     try:
         chat_member = await context.bot.get_chat_member(chat_id=CHANNEL_USERNAME, user_id=user_id)
@@ -275,30 +271,16 @@ async def check_subscription(update: Update, context: ContextTypes.DEFAULT_TYPE)
 
 async def subscription_required(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
-        [InlineKeyboardButton("Подписаться на канал", url=CHANNEL_LINK)],
-        [InlineKeyboardButton("Я подписался ✅", callback_data="check_subscription")],
-        [InlineKeyboardButton("Временный доступ", callback_data="temp_access")]
+        [InlineKeyboardButton("📢 Подписаться на канал", url=CHANNEL_LINK)],
+        [InlineKeyboardButton("✅ Я подписался", callback_data="check_subscription")],
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
     await update.message.reply_text(
         "⚠️ Для использования бота необходимо подписаться на наш канал!\n\n"
-        f"Канал: {CHANNEL_LINK}\n\n"
-        "После подписки нажмите кнопку «Я подписался ✅»\n\n"
-        "Если возникают проблемы с проверкой подписки, можете использовать временный доступ.",
+        f"📍 Канал: {CHANNEL_LINK}\n\n"
+        "После подписки нажмите кнопку «Я подписался» чтобы продолжить.",
         reply_markup=reply_markup
-    )
-
-async def temporary_access(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    query = update.callback_query
-    await query.answer("Временный доступ предоставлен")
-    
-    context.user_data['temp_access'] = True
-    
-    await query.edit_message_text(
-        "✅ Временный доступ предоставлен!\n\n"
-        "Вы можете пользоваться всеми функциями бота, но рекомендуем подписаться на канал.\n\n"
-        "Используйте /generate чтобы сгенерировать коды или просто отправьте код команды."
     )
 
 async def check_subscription_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -315,16 +297,14 @@ async def check_subscription_callback(update: Update, context: ContextTypes.DEFA
         )
     else:
         keyboard = [
-            [InlineKeyboardButton("Подписаться на канал", url=CHANNEL_LINK)],
-            [InlineKeyboardButton("Проверить снова", callback_data="check_subscription")],
-            [InlineKeyboardButton("Временный доступ", callback_data="temp_access")]
+            [InlineKeyboardButton("📢 Подписаться на канал", url=CHANNEL_LINK)],
+            [InlineKeyboardButton("🔄 Проверить снова", callback_data="check_subscription")],
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
         await query.edit_message_text(
             "❌ Вы не подписаны на наш канал!\n\n"
-            f"Пожалуйста, подпишитесь: {CHANNEL_LINK}\n\n"
-            "После подписки нажмите кнопку «Проверить снова»\n\n"
-            "Если возникают проблемы с проверкой подписки, можете использовать временный доступ.",
+            f"📍 Канал: {CHANNEL_LINK}\n\n"
+            "После подписки нажмите кнопку «Проверить снова» чтобы продолжить.",
             reply_markup=reply_markup
         )
 
@@ -340,13 +320,8 @@ async def select_language(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     if not is_subscribed:
         return await subscription_required(update, context)
     
-    temp_access = context.user_data.get('temp_access', False)
-    
     if context.user_data:
         context.user_data.clear()
-    
-    if temp_access:
-        context.user_data['temp_access'] = True
     
     context.user_data['offset'] = 50
     
@@ -641,7 +616,6 @@ def main() -> None:
     application.add_handler(code_conv_handler)
     
     application.add_handler(CallbackQueryHandler(check_subscription_callback, pattern="^check_subscription$"))
-    application.add_handler(CallbackQueryHandler(temporary_access, pattern="^temp_access$"))
     
     application.add_handler(MessageHandler(
         filters.TEXT & ~filters.COMMAND, 
