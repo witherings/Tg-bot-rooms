@@ -19,8 +19,8 @@ TEAM_TAG = "X"
 CONVERSION_CHARS = "0289PYLQGRJCUV"
 HASH_TAG = "#"
 
-CHANNEL_USERNAME = "@neighty_bs"
-CHANNEL_LINK = "https://t.me/neighty_bs"
+CHANNEL_USERNAME = "@realarenax"
+CHANNEL_LINK = "https://t.me/realarenax"
 
 PREDEFINED_OFFSETS = [5, 10, 20, 50, 100]
 
