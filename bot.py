@@ -215,7 +215,30 @@ except ImportError:
     print("pip install python-telegram-bot\n")
     sys.exit(1)
 
-CHOOSE_OFFSET, ENTER_CODE = range(2)
+SELECT_LANGUAGE, CHOOSE_OFFSET, ENTER_CODE = range(3)
+
+MESSAGES = {
+    'ru': {
+        'welcome': '🔥 ИЩЕШЬ ТИМЕЙТОВ ИЛИ ХОЧЕШЬ УДИВИТЬ РАНДОМОВ? 🔥\n\nВстречайте <b>Team Codes | BS</b> — твой лучший помощник для поиска рандомных команд! Ты можешь зайти в руму даже к тем, кто никого не ищет. Больше никаких проблем с поиском кодов.\n\n🎮 <b>Что умеет бот:</b>\n✅ Генерирует 10 уникальных кодов за один клик\n✅ Создает прямые ссылки-приглашения (просто нажми и играй)\n✅ Умная система Offset: меняй сдвиг (5, 50, 100), чтобы находить свободные румы!\n\n🚀 <b>Как это работает?</b>\n1. Отправь боту свой код команды или ссылку\n2. Получи список из 10 новых рабочих кодов и ссылок\n\n🛡 Безопасно и приватно. Сделано игроками для игроков.',
+        'generate_prompt': '📝 Введите код команды Brawl Stars',
+        'invalid_code': '⚠️ Неверный формат кода команды!',
+        'generated_header': '🎮 <b>Сгенерированные коды</b> (смещение: +',
+        'generated_footer': '💡 Нажми на ссылку или скопируй код',
+        'help': '<b>📖 Справка по боту</b>\n\n<b>🎯 Что делает бот?</b>\nГенерирует уникальные коды команд Brawl Stars с возможностью копирования и отправки приглашений.\n\n<b>📝 Как использовать:</b>\n1. Отправьте код команды (например: <code>XWADUQNY</code>)\n2. Или отправьте ссылку на команду\n3. Получите 10 новых кодов с приватными ссылками\n\n<b>⚙️ Команды:</b>\n/offset - выбрать смещение для генерации\n/generate - начать генерацию\n/help - эта справка\n\n<b>✅ Поддерживает:</b>\n✓ Прямые коды (XWADUQNY)\n✓ Ссылки-приглашения\n✓ Произвольные смещения',
+        'select_language': '🌐 Выберите язык / Choose language:',
+        'offset_prompt': '🔢 Выберите смещение или введите свое значение:',
+    },
+    'en': {
+        'welcome': '🔥 LOOKING FOR TEAMMATES OR WANT TO SURPRISE RANDOMS? 🔥\n\nMeet <b>Team Codes | BS</b> — your ultimate tool for finding random teams! You can join lobbies even with players who aren\'t looking for anyone. No more struggles finding codes.\n\n🎮 <b>Bot Features:</b>\n✅ Generates 10 unique codes in one click\n✅ Creates direct invite links (just click & play)\n✅ Smart Offset System: change the shift (5, 50, 100) to find active rooms!\n\n🚀 <b>How does it work?</b>\n1. Send your team code or link to the bot\n2. Get a list of 10 fresh working codes and links\n\n🛡 Safe & Private. Made by players, for players.',
+        'generate_prompt': '📝 Enter your Brawl Stars team code',
+        'invalid_code': '⚠️ Invalid team code format!',
+        'generated_header': '🎮 <b>Generated Codes</b> (offset: +',
+        'generated_footer': '💡 Click the link or copy the code',
+        'help': '<b>📖 Bot Help</b>\n\n<b>🎯 What does this bot do?</b>\nGenerates unique Brawl Stars team codes with copy and invite link functionality.\n\n<b>📝 How to use:</b>\n1. Send a team code (example: <code>XWADUQNY</code>)\n2. Or send a team invite link\n3. Get 10 new codes with private invite links\n\n<b>⚙️ Commands:</b>\n/offset - choose offset for generation\n/generate - start generation\n/help - this help\n\n<b>✅ Supports:</b>\n✓ Direct codes (XWADUQNY)\n✓ Invite links\n✓ Custom offsets',
+        'select_language': '🌐 Select language / Выберите язык:',
+        'offset_prompt': '🔢 Select offset or enter custom value:',
+    }
+}
 
 async def check_subscription(update: Update, context: ContextTypes.DEFAULT_TYPE) -> bool:
     if context.user_data.get('temp_access', False):
@@ -303,7 +326,7 @@ async def check_subscription_callback(update: Update, context: ContextTypes.DEFA
             reply_markup=reply_markup
         )
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+async def select_language(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user = update.effective_user
     user_id = user.id
     username = user.username
@@ -325,20 +348,37 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     
     context.user_data['offset'] = 50
     
-    await update.message.reply_html(
-        f"👋 Привет, {user.mention_html()}!\n\n"
-        f"🎮 <b>Генератор приватных кодов Brawl Stars</b>\n\n"
-        f"Отправьте код команды или ссылку-приглашение - я создам для вас 10 уникальных кодов!\n\n"
-        f"📊 <b>Как пользоваться:</b>\n"
-        f"1. Введите код (например: <code>XWADUQNY</code>)\n"
-        f"2. Выберите смещение (/offset) или используйте стандартное (+50)\n"
-        f"3. Получите ссылки для приглашения в команду\n\n"
-        f"💡 <b>Команды:</b>\n"
-        f"/offset - изменить смещение\n"
-        f"/help - справка"
+    keyboard = [
+        [InlineKeyboardButton("🇷🇺 Русский", callback_data="lang_ru")],
+        [InlineKeyboardButton("🇬🇧 English", callback_data="lang_en")],
+    ]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    
+    await update.message.reply_photo(
+        photo=open('/home/runner/workspace/welcome.png', 'rb'),
+        caption=MESSAGES['ru']['select_language'],
+        reply_markup=reply_markup,
+        parse_mode="HTML"
+    )
+    
+    return SELECT_LANGUAGE
+
+async def language_choice(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    query = update.callback_query
+    await query.answer()
+    
+    lang = 'ru' if query.data == 'lang_ru' else 'en'
+    context.user_data['language'] = lang
+    
+    await query.edit_message_caption(
+        caption=MESSAGES[lang]['welcome'],
+        parse_mode="HTML"
     )
     
     return ConversationHandler.END
+
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
+    return await select_language(update, context)
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     is_subscribed = await check_subscription(update, context)
@@ -346,26 +386,9 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     if not is_subscribed:
         return await subscription_required(update, context)
     
-    current_offset = context.user_data.get('offset', 50)
+    lang = context.user_data.get('language', 'ru')
     
-    await update.message.reply_html(
-        "<b>📖 Справка по боту</b>\n\n"
-        "<b>🎯 Что делает бот?</b>\n"
-        "Генерирует уникальные коды команд Brawl Stars с возможностью копирования и отправки приглашений.\n\n"
-        "<b>📝 Как использовать:</b>\n"
-        "1. Отправьте код команды (например: <code>XWADUQNY</code>)\n"
-        "2. Или отправьте ссылку на команду\n"
-        "3. Получите 10 новых кодов с приватными ссылками\n\n"
-        "<b>⚙️ Команды:</b>\n"
-        "/offset - выбрать смещение для генерации\n"
-        "/generate - начать генерацию\n"
-        "/help - эта справка\n\n"
-        f"<b>🔢 Текущее смещение:</b> <code>{current_offset}</code>\n\n"
-        "<b>✅ Поддерживает:</b>\n"
-        "✓ Прямые коды (XWADUQNY)\n"
-        "✓ Ссылки-приглашения\n"
-        "✓ Произвольные смещения"
-    )
+    await update.message.reply_html(MESSAGES[lang]['help'])
     
     return ConversationHandler.END
 
@@ -375,6 +398,7 @@ async def select_offset(update: Update, context: ContextTypes.DEFAULT_TYPE) -> i
     if not is_subscribed:
         return await subscription_required(update, context)
     
+    lang = context.user_data.get('language', 'ru')
     current_offset = context.user_data.get('offset', 50)
     
     keyboard = []
@@ -465,14 +489,14 @@ async def request_code(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
     if not is_subscribed:
         return await subscription_required(update, context)
     
+    lang = context.user_data.get('language', 'ru')
     current_offset = context.user_data.get('offset', 50)
     
+    prompt = MESSAGES[lang]['generate_prompt'] if lang == 'en' else f"📝 Введите код команды Brawl Stars"
+    
     await update.message.reply_text(
-        f"📝 Введите код команды Brawl Stars\n\n"
-        f"Текущее смещение: *{current_offset}*\n\n"
-        "Принимаются:\n"
-        "- Код команды (например, XWADUQNY)\n"
-        "- Ссылка-приглашение",
+        f"{prompt}\n\n"
+        f"Offset: *{current_offset}*",
         parse_mode="Markdown"
     )
     
@@ -506,39 +530,32 @@ async def generate_codes(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         team_code = text.upper()
     
     if not is_valid_team_code(team_code):
-        await update.message.reply_text(
-            "⚠️ Неверный формат кода команды!\n\n"
-            "Код должен начинаться с X и содержать символы из набора:\n"
-            f"{TEAM_CONVERSION_CHARS}\n\n"
-            "Пример: XWADUQNY"
-        )
+        lang = context.user_data.get('language', 'ru')
+        await update.message.reply_text(MESSAGES[lang]['invalid_code'])
         return ConversationHandler.END
     
+    lang = context.user_data.get('language', 'ru')
     offset = context.user_data.get('offset', 50)
     
     try:
         codes = generate_sequential_codes(team_code, offset, 10)
         
-        result_message = f"🎮 <b>Сгенерированные коды</b> (смещение: +{offset})\n\n"
+        lang_code = 'ru' if lang == 'ru' else 'en'
+        result_message = f"{MESSAGES[lang]['generated_header']}{offset})\n\n"
         
         for i, code_data in enumerate(codes, 1):
             team_code_str = code_data['team_code']
-            invite_url = f"https://link.brawlstars.com/invite/gameroom/ru/?tag={team_code_str}"
+            invite_url = f"https://link.brawlstars.com/invite/gameroom/{lang_code}/?tag={team_code_str}"
             result_message += f"{i}. 🔗 {invite_url}\n<code>{team_code_str}</code>\n\n"
         
-        result_message += "💡 Нажми на ссылку или скопируй код"
+        result_message += MESSAGES[lang]['generated_footer']
         
-        await update.message.reply_html(
-            result_message
-        )
+        await update.message.reply_html(result_message)
         
         log_message(user_id, username, first_name, f"Сгенерированы коды (смещение: +{offset})", team_code)
         
     except ValueError as e:
-        await update.message.reply_text(
-            f"⚠️ Ошибка: {str(e)}\n\n"
-            "Пожалуйста, проверьте код и попробуйте снова."
-        )
+        await update.message.reply_text(f"⚠️ Error: {str(e)}")
     
     return ConversationHandler.END
 
@@ -602,7 +619,17 @@ def main() -> None:
         fallbacks=[CommandHandler("cancel", cancel)],
     )
     
-    application.add_handler(CommandHandler("start", start))
+    lang_conv_handler = ConversationHandler(
+        entry_points=[CommandHandler("start", start)],
+        states={
+            SELECT_LANGUAGE: [
+                CallbackQueryHandler(language_choice, pattern="^lang_(ru|en)$"),
+            ],
+        },
+        fallbacks=[CommandHandler("cancel", cancel)],
+    )
+    
+    application.add_handler(lang_conv_handler)
     application.add_handler(CommandHandler("help", help_command))
     application.add_handler(offset_conv_handler)
     application.add_handler(code_conv_handler)
