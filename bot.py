@@ -549,6 +549,9 @@ def run_flask():
 def main() -> None:
     token = os.environ.get("TELEGRAM_BOT_TOKEN")
     
+    if token:
+        token = token.strip()
+    
     if not token:
         print("❌ TELEGRAM_BOT_TOKEN не указан в переменных окружения.")
         print("Установите переменную окружения TELEGRAM_BOT_TOKEN с токеном вашего бота.")
