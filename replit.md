@@ -1,75 +1,18 @@
-# Brawl Stars Code Generator Bot
+# Team Code Lab
 
-## Overview
+## Local run
 
-Telegram бот для генерации последовательных кодов команд Brawl Stars. Развёрнут ТОЛЬКО на Railway в режиме Polling.
+- Start the Replit `Website` workflow, or run `python main.py`.
+- The web app listens on `PORT` when set, otherwise port `5000`.
+- `GET /` serves the website; `POST /api/generate` generates 10 results; `GET /health` is the health check.
 
-**Обязательная подписка:** @realarenax
+## Behavior
 
-## Deployment (Railway)
+- Public access: no Telegram, accounts, channel checks, or database.
+- Supports a team code or invite URL, predefined offsets, and custom offsets from 0 to 10,000.
+- The website reuses the imported code conversion algorithm.
+- Generated codes and links are not verified against live Brawl Stars rooms.
 
-### Переменные окружения (должны быть установлены):
-- ✅ TELEGRAM_BOT_TOKEN
-- ✅ DATABASE_URL (PostgreSQL)
+## Railway
 
-### Режим работы:
-- **Polling** (долгие опросы к Telegram API)
-- Не требует webhook настроек
-- Просто запусти бот и работает!
-
-## Bot Features
-
-- ✅ Генерация 10 уникальных кодов за клик
-- ✅ Прямые ссылки-приглашения
-- ✅ Умная система Offset (5, 50, 100 и т.д.)
-- ✅ Обязательная подписка на @realarenax
-- ✅ Двуязычность: русский/английский
-- ✅ Логирование в PostgreSQL
-
-## Commands
-
-- `/start` - Выбор языка и приветствие
-- `/generate` - Генерировать коды
-- `/offset` - Изменить смещение
-- `/help` - Справка
-
-## Поток работы
-
-```
-/start
-  ↓
-Проверка подписки на @realarenax
-  ↓
-Не подписан → "Подпишись" (кнопка)
-  ↓
-Подписан → Выбор языка 🇷🇺/🇬🇧
-  ↓
-Показ описания с эмодзи
-  ↓
-Готов к работе ✅
-```
-
-## Subscription Required
-
-Канал: https://t.me/realarenax
-
-Все пользователи должны подписаться перед использованием бота. Без подписки доступа нет.
-
-## Database
-
-PostgreSQL таблица: `message_logs`
-- user_id, username, first_name
-- message_text, code_input
-- created_at
-
-## Как запустить на Railway
-
-1. Убедись что на Railway установлены переменные:
-   - TELEGRAM_BOT_TOKEN
-   - DATABASE_URL
-
-2. Railway автоматически запустит бот через Procfile
-
-3. Бот сразу начнёт работать в режиме Polling ✅
-
-Никаких дополнительных настроек не требуется!
+The repository is configured to run `gunicorn --bind 0.0.0.0:$PORT main:app`. No environment secrets or database are required.

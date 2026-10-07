@@ -1,83 +1,13 @@
-# Инструкция по деплою на Railway
+# Deploy Team Code Lab to Railway
 
-## Шаг 1: Создание аккаунта Railway
+1. Create a Railway service from this GitHub repository.
+2. Keep the service's source/root directory at the repository root.
+3. Railway installs the Python dependencies from `requirements.txt`.
+4. The start command is configured in `railway.json` and `Procfile`: `gunicorn --bind 0.0.0.0:$PORT main:app`.
+5. Deploy and open the generated public domain.
 
-1. Перейдите на https://railway.app
-2. Зарегистрируйтесь через GitHub или email
+No Telegram bot token, PostgreSQL database, or other environment variable is needed. Railway provides the `PORT` value automatically.
 
-## Шаг 2: Создание нового проекта
+## Important behavior
 
-1. Нажмите **"New Project"**
-2. Выберите **"Deploy from GitHub repo"**
-3. Авторизуйте Railway доступ к вашему GitHub
-4. Выберите репозиторий с ботом
-
-## Шаг 3: Добавление PostgreSQL базы данных
-
-1. В проекте нажмите **"+ New"**
-2. Выберите **"Database"** → **"Add PostgreSQL"**
-3. Railway автоматически создаст переменную `DATABASE_URL`
-
-## Шаг 4: Настройка переменных окружения
-
-В настройках проекта (Variables) добавьте:
-
-| Переменная | Значение |
-|------------|----------|
-| `TELEGRAM_BOT_TOKEN` | Токен вашего бота от @BotFather |
-
-**Важно:** `DATABASE_URL` будет добавлена автоматически после создания PostgreSQL базы.
-
-## Шаг 5: Деплой
-
-1. Railway автоматически задеплоит бот при каждом push в репозиторий
-2. Проверьте логи деплоя, чтобы убедиться, что бот запустился
-
-## Шаг 6: Проверка работы
-
-1. Перейдите в Telegram
-2. Найдите вашего бота и отправьте `/start`
-3. Бот должен ответить приветственным сообщением
-
-## Структура файлов для Railway
-
-```
-├── bot.py              # Основной файл бота
-├── requirements.txt    # Python зависимости
-├── Procfile            # Команда запуска для Railway
-├── runtime.txt         # Версия Python
-└── railway.json        # Конфигурация Railway
-```
-
-## Важные замечания
-
-- Бот включает встроенный health check сервер на порту, указанном в переменной `PORT`
-- База данных автоматически создает таблицу `message_logs` при первом запуске
-- Бот использует polling режим для получения обновлений от Telegram
-
-## Получение токена бота
-
-1. Откройте Telegram и найдите @BotFather
-2. Отправьте команду `/newbot`
-3. Следуйте инструкциям для создания бота
-4. Скопируйте полученный токен
-
-## Настройка подписки на канал
-
-В файле `bot.py` измените константы:
-
-```python
-CHANNEL_USERNAME = "@ваш_канал"  # Имя вашего канала
-CHANNEL_LINK = "https://t.me/ваш_канал"  # Ссылка на канал
-```
-
-**Важно:** Бот должен быть добавлен в канал как администратор для проверки подписок.
-
-## Отладка
-
-Если бот не работает:
-
-1. Проверьте логи в Railway Dashboard
-2. Убедитесь, что `TELEGRAM_BOT_TOKEN` установлен правильно
-3. Проверьте, что PostgreSQL база данных создана и подключена
-4. Убедитесь, что бот добавлен в канал как администратор
+The site calculates sequential team codes and creates invite-shaped links using the imported conversion algorithm. It does not verify that a generated code points to an active or joinable game room.

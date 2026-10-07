@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f5e7">
+  <meta name="description" content="Generate a quick set of Brawl Stars team invite links from a team code.">
+  <title>Team Code Lab — Brawl Stars</title>
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Team Code Lab — home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 8.2 12 4l7 4.2v7.6L12 20l-7-4.2V8.2Z" stroke="currentColor" stroke-width="1.8"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="brand-name">Team Code Lab</span>
+      </a>
+      <div class="header-tools">
+        <div class="language-switch" role="group" aria-label="Language">
+          <button type="button" data-language="ru" aria-pressed="true">RU</button>
+          <button type="button" data-language="en" aria-pressed="false">EN</button>
+        </div>
+        <button class="sound-toggle" id="sound-toggle" type="button" aria-pressed="false" aria-label="Enable sound" title="Enable sound">
+          <svg class="sound-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M16 9a5 5 0 0 1 0 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="m17 4 4 4m0-4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          <span class="sound-label" id="sound-label">Звук выкл.</span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span><span data-i18n="eyebrow">БЫСТРЫЙ ГЕНЕРАТОР КОДОВ КОМАНДЫ</span></p>
+          <h1 id="page-title"><span data-i18n="titleA">БОЛЬШЕ</span><br><span class="accent" data-i18n="titleB">ВАРИАНТОВ.</span></h1>
+          <p class="hero-copy" data-i18n="heroCopy">Вставь код команды или ссылку-приглашение. Получи 10 ссылок со смещением — и сразу зови друзей.</p>
+        </div>
+        <div class="orbit-stamp" aria-hidden="true">
+          <svg class="stamp-star" viewBox="0 0 24 24" fill="currentColor"><path d="m12 1.5 2.6 7.9 7.9 2.6-7.9 2.6-2.6 7.9-2.6-7.9-7.9-2.6 7.9-2.6L12 1.5Z"/></svg>
+          <span class="stamp-copy" data-i18n="stamp">КОМАНДА<br>ГОТОВА</span>
+        </div>
+      </section>
+
+      <section class="generator" aria-labelledby="generator-title">
+        <div class="generator-bar">
+          <div class="generator-bar-title"><span class="bar-index">01</span><span id="generator-title" data-i18n="generatorTitle">СОБЕРИ СВОИ ССЫЛКИ</span></div>
+          <span class="bar-note" data-i18n="barNote">БЫСТРО · БЕЗ ЛИШНЕГО</span>
+        </div>
+        <form id="generator-form" novalidate>
+          <div class="form-content">
+            <label class="input-label" for="team-input" data-i18n="inputLabel">Код команды или ссылка-приглашение</label>
+            <div class="input-wrap">
+              <input class="code-input" id="team-input" name="teamCodeOrLink" type="text" maxlength="512" autocomplete="off" spellcheck="false" placeholder="Например: XQWERTY или ссылка приглашения">
+              <button class="paste-button" id="paste-button" type="button">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="7" y="5" width="13" height="16" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M9 5V4a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2v1M4 8v11a2 2 0 0 0 2 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                <span data-i18n="paste">Вставить</span>
+              </button>
+            </div>
+            <div class="form-lower">
+              <div class="offset-field">
+                <div class="offset-label-row">
+                  <span class="field-label" data-i18n="offsetLabel">Смещение</span>
+                  <span class="offset-hint" data-i18n="offsetHint">между исходным и первым кодом</span>
+                </div>
+                <div class="offset-options" role="group" aria-label="Offset">
+                  <button class="offset-chip" type="button" data-offset="0" aria-pressed="false">0</button>
+                  <button class="offset-chip" type="button" data-offset="5" aria-pressed="false">5</button>
+                  <button class="offset-chip" type="button" data-offset="10" aria-pressed="false">10</button>
+                  <button class="offset-chip" type="button" data-offset="20" aria-pressed="false">20</button>
+                  <button class="offset-chip" type="button" data-offset="50" aria-pressed="true">50</button>
+                  <button class="offset-chip" type="button" data-offset="100" aria-pressed="false">100</button>
+                  <input class="custom-offset" id="custom-offset" type="number" min="0" max="10000" step="1" inputmode="numeric" aria-label="Custom offset" placeholder="Custom">
+                </div>
+              </div>
+              <button class="generate-button" id="generate-button" type="submit">
+                <svg class="generate-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 2 4.5 13h6l-.7 9L19.5 11h-6l-.5-9Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+                <span id="generate-label" data-i18n="generate">Сгенерировать 10 ссылок</span>
+                <span class="loading-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              </button>
+            </div>
+            <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
+          </div>
+        </form>
+      </section>
+
+      <section class="results-section" aria-labelledby="results-title">
+        <div class="results-head">
+          <div>
+            <p class="results-kicker" data-i18n="resultsKicker">ТВОЙ НАБОР</p>
+            <h2 class="results-title" id="results-title" data-i18n="resultsTitle">ГОТОВЫЕ ССЫЛКИ</h2>
+            <div class="results-meta" id="results-meta" data-i18n="resultsMeta">10 ссылок появятся здесь</div>
+          </div>
+          <button class="copy-all" id="copy-all" type="button" disabled>
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="8" y="8" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3" stroke="currentColor" stroke-width="1.7"/></svg>
+            <span data-i18n="copyAll">Скопировать все</span>
+          </button>
+        </div>
+        <div class="results-area" id="results-area">
+          <div class="result-placeholder" id="result-placeholder">
+            <span class="placeholder-symbol" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M5 7h14M5 12h9M5 17h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="m17 15 4 4m0-4-4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            </span>
+            <div class="placeholder-text"><strong data-i18n="emptyTitle">Тут будет твой набор</strong><span data-i18n="emptyCopy">Введи код выше — и ссылки появятся сразу после генерации.</span></div>
+          </div>
+          <div class="result-list" id="result-list" aria-live="polite"></div>
+        </div>
+        <p class="note-strip">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v5m0-8h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <span><strong data-i18n="noteLead">Важно:</strong> <span data-i18n="noteText">коды и ссылки рассчитываются автоматически. Активность игровых комнат не проверяется.</span></span>
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span class="footer-mark">TEAM CODE LAB</span>
+      <span data-i18n="footerNote">Неофициальный инструмент для игроков Brawl Stars</span>
+    </footer>
+  </div>
+</body>
+</html>
